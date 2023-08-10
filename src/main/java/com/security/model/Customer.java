@@ -1,19 +1,41 @@
 package com.security.model;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Customer {
+	@Id
 	private String username;
     private String password;
 	private String email;
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public User(String username, String password, String email) {
-		super();
+	private String role;
+	
+	
+	
+	public Customer(String username, String password, String email) {
+	
 		this.username = username;
 		this.password = password;
 		this.email = email;
 	}
+	public Customer(String username, String password, String email, String role) {
+		
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public Customer() {
+	
+	}
+	
 	public String getUsername() {
 		return username;
 	}

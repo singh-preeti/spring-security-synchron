@@ -22,12 +22,19 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 		.and()
 		.authorizeRequests()
+		//to make signin url public
+		.antMatchers("/signin").permitAll()
 		.antMatchers("/app/**").hasRole("NORMAL")
 		.antMatchers("/users/**").hasRole("ADMIN")
 		   .anyRequest()
 		   .authenticated()
 		   .and()
-		   .httpBasic();
+		   //.httpBasic();
+		   .formLogin()
+		   //step2 if you want to see in url
+		   .loginPage("/signin")
+		   .loginProcessingUrl("/doLogin")
+		   .defaultSuccessUrl("/users/**");
 	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,7 +49,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 		.roles("ADMIN");
 	}
 	@Bean
-	public PasswordEncoder passwordEncoder()
+	public BCryptPasswordEncoder passwordEncoder()
 	{
 		//return NoOpPasswordEncoder.getInstance();
 		return new BCryptPasswordEncoder(10);

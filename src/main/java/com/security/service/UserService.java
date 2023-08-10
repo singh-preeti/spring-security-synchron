@@ -2,37 +2,34 @@ package com.security.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.security.model.User;
+import com.security.model.Customer;
+import com.security.repository.UserRepository;
 
 @Service
 public class UserService {
-
-	//fake user
-	List<User> list = new ArrayList<>();
-	
-	public UserService()
-	{
-		list.add(new User("Preeti","12345","singhpreety217@gmail.com"));
-		list.add(new User("Ekta","12345","ekta216@gmail.com"));
-	}
+  
+	@Autowired
+	private UserRepository repository;
 	
 // get all the users
-	public List<User> getAllUsers()
+	public List<Customer> getAllUsers()
 	{
-		return this.list;
+		return repository.findAll();
 	}
 // get single user
-	public User getUser(String username)
+	public Optional<Customer> getUser(String username)
 	{
-		return this.list.stream().filter((user) -> user.getUsername().equals(username)).findAny().orElse(null);
+		return this.repository.findById(username);
 	}
 // add new user
-	public User addUser(User user)
-	{
-		this.list.add(user);
-		return user;
-	}
+//	public Customer addUser(Customer user)
+//	{
+//		this.list.add(user);
+//		return user;
+//	}
 }
